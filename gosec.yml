@@ -1,0 +1,23 @@
+name: GoSec Analysis
+
+on: [push, pull_request]
+
+jobs:
+  gosec:
+    name: Run GoSec Security Analysis
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Go
+      uses: actions/setup-go@v3
+      with:
+        go-version: '1.20'  # veya kullandığınız Go sürümünü belirleyin
+
+    - name: Install GoSec
+      run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+    - name: Run GoSec
+      run: gosec ./...
